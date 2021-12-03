@@ -9,7 +9,6 @@ ex03
     1. React Event
 ex04
     1. state
-    2. ajax
 ex05
     1. Component Lifecycle
 ex06
