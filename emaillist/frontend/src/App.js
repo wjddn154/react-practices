@@ -16,12 +16,18 @@ export default function() {
 
     useEffect(async () => {
       try {
-        const response = await fetch('/api', {
+        const response = await fetch('http://localhost:8888/api', {
           method: 'get',
+          mode: 'cors',                           //no-cors, cors, same-origin*
+          credentials: 'include',                 //include, omit, same-origin*
+          // credentials: 'same-origin',             //include, omit, same-origin*
+          cache: 'no-cache',                      //no-cache, reload, force-cache, default*
           headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application'
+            'Content-Type': 'application/json',   //cf. application/x-www.form-urlencoded
+            'Accept': 'application/json'               //cf. text/html
           },
+          redirect: 'follow',                     //follow*, error, manual(response.url)
+          referrer: 'client',                     //no-referrer, *client
           body: null
         });
 
@@ -30,6 +36,7 @@ export default function() {
         }
 
         const jsonResult = await response.json();
+        console.log(jsonResult);
         if(jsonResult.result !== 'success') {
           throw new Error(`${jsonResult.result} ${jsonResult.message}`);
         }
