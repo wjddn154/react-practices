@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import RegisterForm from './RegisterForm';
 import SearchBar from './SearchBar';
 import Emaillist from './Emaillist';
@@ -16,18 +16,17 @@ export default function() {
 
     useEffect(async () => {
       try {
-        const response = await fetch('http://localhost:8888/api', {
+        const response = await fetch('/api', {
           method: 'get',
-          mode: 'cors',                           //no-cors, cors, same-origin*
-          credentials: 'include',                 //include, omit, same-origin*
-          // credentials: 'same-origin',             //include, omit, same-origin*
-          cache: 'no-cache',                      //no-cache, reload, force-cache, default*
+          mode: 'cors',                           // no-cors, cors, same-origin*
+          credentials: 'include',                 // include, omit, same-origin*
+          cache: 'no-cache',                      // no-cache, reload, force-cache, default*      
           headers: {
-            'Content-Type': 'application/json',   //cf. application/x-www.form-urlencoded
-            'Accept': 'application/json'               //cf. text/html
+            'Content-Type': 'application/json',   // cf. application/x-www-form-urlencoded
+            'Accept': 'application/json'          // cf. text/html
           },
-          redirect: 'follow',                     //follow*, error, manual(response.url)
-          referrer: 'client',                     //no-referrer, *client
+          redirect: 'follow',                     // follow*, error, manual(response.url)
+          referrer: 'client',                     // no-referrer, *client          
           body: null
         });
 
@@ -37,18 +36,17 @@ export default function() {
 
         const jsonResult = await response.json();
         console.log(jsonResult);
+
         if(jsonResult.result !== 'success') {
           throw new Error(`${jsonResult.result} ${jsonResult.message}`);
         }
 
         setEmails(jsonResult.data);
 
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       }
     }, []);
-
-
 
     return (
         <div className={'App'}>
